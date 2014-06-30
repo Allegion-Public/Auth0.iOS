@@ -225,13 +225,13 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/MobileServicesSDK/WindowsAzureMobileServices.framework/Versions/A\"",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				VALID_ARCHS = i386;
+				VALID_ARCHS = "i386 armv7s armv7 arm64";
 			};
 			name = Debug;
 		};
@@ -246,13 +246,13 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/MobileServicesSDK/WindowsAzureMobileServices.framework/Versions/A\"",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				VALID_ARCHS = i386;
+				VALID_ARCHS = "i386 armv7s armv7 arm64";
 			};
 			name = Release;
 		};
