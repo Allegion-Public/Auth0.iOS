@@ -2,8 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "Auth0User.h"
 
-@interface Auth0Client : NSObject
-{
+@interface Auth0Client : NSObject {
     Auth0User * _auth0User;
 @private
     NSString * _clientId;

@@ -1,7 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@interface Auth0User : NSData
-{
+@interface Auth0User : NSData {
     NSString * _auth0AccessToken;
     NSString * _idToken;
     NSDictionary * _profile;

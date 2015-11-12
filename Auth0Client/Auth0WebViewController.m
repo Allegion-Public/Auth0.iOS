@@ -6,8 +6,7 @@
 
 @implementation Auth0WebViewController
 
-- (id)initWithAuthorizeUrl:(NSURL *)authzUrl returnUrl:(NSString*)returnUrl allowsClose:(BOOL)allowsClose withCompletionHandler:(void (^)(NSString* token, NSString * jwtToken))block
-{
+- (id)initWithAuthorizeUrl:(NSURL *)authzUrl returnUrl:(NSString*)returnUrl allowsClose:(BOOL)allowsClose withCompletionHandler:(void (^)(NSString* token, NSString * jwtToken))block {
     if ((self = [super initWithNibName:nil bundle:nil]))
     {
         _authzUrl = authzUrl;
@@ -31,20 +30,17 @@
     return self;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
--(void) Cancel:(id)sender
-{
+-(void) Cancel:(id)sender {
 	if (_allowsClose) {
 		if (![[self presentedViewController] isBeingDismissed])
-		{
+		 {
 			[self dismissViewControllerAnimated:YES completion:nil];
 		}
 	}
@@ -52,8 +48,7 @@
 
 #pragma mark - View lifecycle
 
-- (void)loadView
-{
+- (void)loadView {
     // create our web view
     _webView = [[UIWebView alloc] init];
     _webView.delegate = self;
@@ -66,15 +61,13 @@
     [_webView loadRequest:request];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES; //(interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark UIWebViewDelegate
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     // Ignore some errors
     if (error.code == 102 || error.code == -999) return;
     
@@ -88,13 +81,11 @@
     [_spinner stopAnimating];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
     [_spinner stopAnimating];
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSString *requestURLString = request.URL.absoluteString;
     
     NSLog(@"HTTPMethod: %@\n", request.HTTPMethod);
@@ -133,8 +124,7 @@
     return YES;
 }
 
-- (NSDictionary*)queryStringForUrl:(NSURL*)URL
-{
+- (NSDictionary*)queryStringForUrl:(NSURL*)URL {
     NSString *queryString = [URL query] ?: [URL fragment];
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
     NSArray *parameters = [queryString componentsSeparatedByString:@"&"];
@@ -149,8 +139,7 @@
     return result;
 }
 
-+ (void)clearCookies
-{
++ (void)clearCookies {
     NSHTTPCookie *cookie;
     NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     for (cookie in [storage cookies]) {
