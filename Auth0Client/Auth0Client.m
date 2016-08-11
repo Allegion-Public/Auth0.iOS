@@ -34,9 +34,6 @@ NSString *DefaultCallback = @"https://%@/mobile";
     return self;
 }
 
-- (void)dealloc {
-}
-
 + (Auth0Client*)auth0Client:(NSString *)domain clientId:(NSString *)clientId {
     static Auth0Client *instance = nil;
     static dispatch_once_t predicate;
@@ -125,7 +122,7 @@ NSString *DefaultCallback = @"https://%@/mobile";
     [self loginAsync:controller connection:connection username:username password:password scope:_scope withCompletionHandler:(void (^)(NSMutableDictionary* error))block];
 }
 
-- (void)loginAsync:(UIViewController*)controller connection:(NSString *)connection username:(NSString *)username password:(NSString *)password scope:(NSString *)scope withCompletionHandler:(void (^)(NSMutableDictionary* error))block; {
+- (void)loginAsync:(UIViewController*)controller connection:(NSString *)connection username:(NSString *)username password:(NSString *)password scope:(NSString *)scope withCompletionHandler:(void (^)(NSMutableDictionary* error))block;{
     NSString *url = [NSString stringWithFormat:ResourceOwnerEndpoint, _domain];
     NSURL *resourceUrl = [NSURL URLWithString:url];
     
@@ -170,11 +167,11 @@ NSString *DefaultCallback = @"https://%@/mobile";
 }
 
 // Login with Identity Provider access_token
-- (void)loginAsync:(UIViewController*)controller connection:(NSString *)connection accessToken:(NSString *)accessToken withCompletionHandler:(void (^)(NSMutableDictionary* error))block {
+- (void)loginAsync:(UIViewController*)controller connection:(NSString *)connection accessToken:(NSString *)accessToken withCompletionHandler:(void (^)(NSMutableDictionary* error))block{
     [self loginAsync:controller connection:connection accessToken:accessToken scope:_scope withCompletionHandler:(void (^)(NSMutableDictionary* error))block];
 }
 
-- (void)loginAsync:(UIViewController*)controller connection:(NSString *)connection accessToken:(NSString *)accessToken scope:(NSString *)scope withCompletionHandler:(void (^)(NSMutableDictionary* error))block; {
+- (void)loginAsync:(UIViewController*)controller connection:(NSString *)connection accessToken:(NSString *)accessToken scope:(NSString *)scope withCompletionHandler:(void (^)(NSMutableDictionary* error))block;{
     NSString *url = [NSString stringWithFormat:IdPAccessTokenEndpoint, _domain];
     NSURL *resourceUrl = [NSURL URLWithString:url];
     
@@ -219,24 +216,20 @@ NSString *DefaultCallback = @"https://%@/mobile";
 }
 
 // Delegation Token
-- (void)getDelegationToken:(NSString *)targetClientId withCompletionHandler:(void (^)(NSMutableDictionary* delegationResult))block {
+- (void)getDelegationToken:(NSString *)targetClientId withCompletionHandler:(void (^)(NSMutableDictionary* delegationResult))block{
     [self getDelegationToken:targetClientId options:[NSMutableDictionary dictionary] withCompletionHandler:(void (^)(NSMutableDictionary* delegationResult))block];
 }
 
-- (void)getDelegationToken:(NSString *)targetClientId options:(NSMutableDictionary *)options withCompletionHandler:(void (^)(NSMutableDictionary* delegationResult))block {
+- (void)getDelegationToken:(NSString *)targetClientId options:(NSMutableDictionary *)options withCompletionHandler:(void (^)(NSMutableDictionary* delegationResult))block{
     NSString *id_token = [options objectForKey:@"id_token"];
     [options removeObjectForKey:@"id_token"];
     
-    if (id_token == nil)
-    {
+    if (id_token == nil) {
         if (self.auth0User == nil ||
             self.auth0User.IdToken == (id)[NSNull null] ||
-            self.auth0User.IdToken.length == 0)
-        {
+            self.auth0User.IdToken.length == 0) {
             [NSException raise:@"Empty id_token" format:@"You need to login first or specify a value for id_token parameter."];
-        }
-        else
-        {
+        } else {
             // take id_token from user profile
             id_token = self.auth0User.IdToken;
         }
@@ -280,8 +273,7 @@ NSString *DefaultCallback = @"https://%@/mobile";
 
 // Helper methods
 - (void)getUserInfo:(NSString *)accessToken withCompletionHandler:(void (^)(NSMutableDictionary* profile))block {
-    if (![accessToken hasPrefix:@"access_token"])
-    {
+    if (![accessToken hasPrefix:@"access_token"]) {
         accessToken = [NSString stringWithFormat:@"access_token=%@", accessToken];
     }
     
@@ -303,7 +295,7 @@ NSString *DefaultCallback = @"https://%@/mobile";
      }];
 }
 
--(NSString *)urlEncode:(NSString *)url {
+- (NSString *)urlEncode:(NSString *)url {
 	NSString *escapedString =
         (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
             NULL,
