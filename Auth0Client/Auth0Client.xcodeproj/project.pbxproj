@@ -126,6 +126,11 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Auth0;
+				TargetAttributes = {
+					3B93F8E617D62B3900547034 = {
+						LastSwiftMigration = 0800;
+					};
+				};
 			};
 			buildConfigurationList = 3B93F8E217D62B3900547034 /* Build configuration list for PBXProject "Auth0Client" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -231,6 +236,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "i386 armv7s armv7 arm64";
 			};
 			name = Debug;
@@ -252,6 +258,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				SWIFT_VERSION = 3.0;
 				VALID_ARCHS = "i386 armv7s armv7 arm64";
 			};
 			name = Release;
