@@ -70,7 +70,7 @@ NSString *DefaultCallback = @"https://%@/mobile";
     
     Auth0WebViewController *webController = [[Auth0WebViewController alloc] initWithAuthorizeUrl:[NSURL URLWithString:url] returnUrl:callback allowsClose:YES withCompletionHandler:^(NSString *token, NSString * jwtToken, NSString * error) {
         if (token) {
-            [self getUserInfo:token withCompletionHandler:^(NSMutableDictionary* profile) {
+            [self getUserInfo:token success:^(NSMutableDictionary* profile) {
                 
                 NSMutableDictionary* accountProperties = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                                                    token ?: [NSNull null], @"access_token",
@@ -80,6 +80,8 @@ NSString *DefaultCallback = @"https://%@/mobile";
                 
                 _auth0User = [Auth0User auth0User:accountProperties];
                 block(nil);
+            } failure:^(NSMutableDictionary *error) {
+                block(error);
             }];
         } else {
             NSString * errorMsg = error ? error : @"Authentication Failed";
@@ -158,11 +160,13 @@ NSString *DefaultCallback = @"https://%@/mobile";
 			 return;
 		 }
 		 
-		 [self getUserInfo:accessToken withCompletionHandler:^(NSMutableDictionary* profile) {
+		 [self getUserInfo:accessToken success:^(NSMutableDictionary* profile) {
 			 [parseData setObject:profile forKey:@"profile"];
 			 _auth0User = [Auth0User auth0User:parseData];
 			 block(nil);
-		 }];
+         } failure:^(NSMutableDictionary *error) {
+             block(error);
+         }];
      }];
 }
 
@@ -207,11 +211,13 @@ NSString *DefaultCallback = @"https://%@/mobile";
 			 return;
 		 }
 		 
-		 [self getUserInfo:auth0_accessToken withCompletionHandler:^(NSMutableDictionary* profile) {
+		 [self getUserInfo:auth0_accessToken success:^(NSMutableDictionary* profile) {
 			 [parseData setObject:profile forKey:@"profile"];
 			 _auth0User = [Auth0User auth0User:parseData];
 			 block(nil);
-		 }];
+         } failure:^(NSMutableDictionary* error) {
+             block(error);
+         }];
      }];
 }
 
@@ -272,7 +278,7 @@ NSString *DefaultCallback = @"https://%@/mobile";
 }
 
 // Helper methods
-- (void)getUserInfo:(NSString *)accessToken withCompletionHandler:(void (^)(NSMutableDictionary* profile))block {
+- (void)getUserInfo:(NSString *)accessToken success:(void (^)(NSMutableDictionary* profile))success failure: (void (^)(NSMutableDictionary* error))failure {
     if (![accessToken hasPrefix:@"access_token"]) {
         accessToken = [NSString stringWithFormat:@"access_token=%@", accessToken];
     }
@@ -284,14 +290,16 @@ NSString *DefaultCallback = @"https://%@/mobile";
     [request setHTTPMethod:@"GET"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-     {
-         NSError* parseError;
-         NSMutableDictionary* parseData = [[NSMutableDictionary alloc] initWithDictionary:[NSJSONSerialization
-                                                                                           JSONObjectWithData:data
-                                                                                           options:kNilOptions
-                                                                                           error:&parseError]];
-         block(parseData);
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        NSError* parseError;
+        if (data) {
+            NSMutableDictionary* parseData = [[NSMutableDictionary alloc] initWithDictionary:[NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&parseError]];
+            success(parseData);
+        } else {
+            NSDictionary *errorInfo = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"Failed to retrieve user information.", nil), NSLocalizedDescriptionKey, nil];
+            parseError = [NSError errorWithDomain:NSLocalizedString(@"WebService",ERROR_DOMAIN) code:100 userInfo:errorInfo];
+            failure([[NSMutableDictionary alloc] initWithObjectsAndKeys: parseError, @"error", [parseError.userInfo objectForKey:NSLocalizedDescriptionKey], @"error_description", nil]);
+        }
      }];
 }
 
