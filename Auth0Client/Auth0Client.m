@@ -161,7 +161,7 @@ NSString *DefaultCallback = @"https://%@/mobile";
 		 }
 		 
 		 [self getUserInfo:accessToken success:^(NSMutableDictionary* profile) {
-			 [parseData setObject:profile forKey:@"profile"];
+			 [parseData setObject:profile?: [NSNull null] forKey:@"profile"];
 			 _auth0User = [Auth0User auth0User:parseData];
 			 block(nil);
          } failure:^(NSMutableDictionary *error) {
@@ -212,7 +212,7 @@ NSString *DefaultCallback = @"https://%@/mobile";
 		 }
 		 
 		 [self getUserInfo:auth0_accessToken success:^(NSMutableDictionary* profile) {
-			 [parseData setObject:profile forKey:@"profile"];
+			 [parseData setObject:profile?: [NSNull null] forKey:@"profile"];
 			 _auth0User = [Auth0User auth0User:parseData];
 			 block(nil);
          } failure:^(NSMutableDictionary* error) {
