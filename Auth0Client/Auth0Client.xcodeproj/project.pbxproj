@@ -190,7 +190,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "";
 			};
 			name = Debug;
 		};
@@ -215,7 +215,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "";
 			};
 			name = Release;
 		};
@@ -237,7 +237,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 3.0;
-				VALID_ARCHS = "armv7s armv7 arm64";
+				VALID_ARCHS = "";
 			};
 			name = Debug;
 		};
@@ -259,7 +259,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 3.0;
-				VALID_ARCHS = "armv7s armv7 arm64";
+				VALID_ARCHS = "";
 			};
 			name = Release;
 		};
